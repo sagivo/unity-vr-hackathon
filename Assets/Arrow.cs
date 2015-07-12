@@ -3,17 +3,20 @@ using System.Collections;
 
 public class Arrow : MonoBehaviour {
 	Rigidbody body;
-	public float speed = 2;
-	// Use this for initialization
+	public bool flying;
+
 	void Start () {
 		body = GetComponent<Rigidbody> ();
-		//transform.forward = Vector3.Slerp (transform.forward,body.velocity.normalized, Time.deltaTime);
-		var fwd = transform.TransformDirection(Vector3.forward);
-		body.AddForce(fwd * speed, ForceMode.Impulse);
 	}
-	
-	// Update is called once per frame
+
+	public void Fly(){
+		Invoke ("lookat", .1f);
+	}
+
+	void lookat(){
+		flying = true;
+	}
 	void Update () {
-		transform.LookAt (transform.position + body.velocity);
+		if (flying) transform.LookAt (transform.position + body.velocity);
 	}
 }
